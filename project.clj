@@ -1,0 +1,32 @@
+(defproject moarweba "0.1.0-SNAPSHOT"
+  :description ""
+  :url "https://github.com/tuddman/moarweba"
+  :license {:name "unlicense"
+            :url "https://unlicense.org/"}
+  :dependencies [[org.clojure/clojure "1.9.0-alpha16"]
+                 [org.clojure/tools.cli "0.3.5"]
+                 [bidi "2.1.2"]
+                 [bouncer "1.0.1"]
+                 [buddy/buddy-auth "1.4.1"]
+                 [buddy/buddy-core "1.2.0"]
+                 [buddy/buddy-hashers "1.2.0"]
+                 [buddy/buddy-sign "1.5.0"]
+                 [cheshire "5.7.1"]
+                 [clj-http "3.6.1"]
+                 [com.taoensso/timbre "4.10.0"]
+                 [http-kit "2.2.0"]
+                 [liberator "0.15.1"]
+                 [compojure "1.6.0"] 
+                 [ring/ring-core "1.6.2"]
+                 [ring/ring-jetty-adapter "1.6.2"]
+                 [ring/ring-json "0.4.0"]
+                 [ring-cors "0.1.11"]
+                 [ring/ring-defaults "0.3.1"]
+                 [ring-middleware-format "0.7.2" :exclusions [ring]]]
+  :min-lein-version "2.5.1"
+  :main moarweba.server
+  :profiles  {:dev  {:dependencies  [[org.clojure/test.check "0.9.0"]]}
+              :uberjar  {:main moarweba.server, :aot :all}
+              :production  {:env {:production true}}}
+  :uberjar-name "moarweba-0.1.0-SNAPSHOT-standalone.jar"  
+  :repl-options {:timeout 60000}) 
