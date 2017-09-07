@@ -12,9 +12,15 @@ It is designed to offer you a great starting point for your project.
 
 ### Starting Up
 
-```
-lein new moarweba myproject
-cd myproject
+choose a name for your project. e.g., mycoolapp
+
+Then it's just a matter of entering the following commands into your terminal:
+
+```bash
+export PORT=8080
+
+lein new moarweba mycoolapp
+cd mycoolapp 
 lein repl
 ```
 
@@ -95,7 +101,7 @@ Remember to comment out `(reload)` before pushing to production so the `-main` f
 
 this is really an implementation of liberator for defining your REST resources combined with bidi for routing.  Define all of your URL endpoints in here, and use the various `defresources` to handle them appropriately.
 
-##### bankend.clj
+##### db.clj
 
 I'm not imposing any opinions about what backend you should use. Some of you like databases. Some of you don't.  If you do, here's a good starting place to put your datastore stuff.
 

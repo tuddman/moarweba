@@ -10,9 +10,7 @@
             [ring.middleware.json     :refer [wrap-json-body]]
             [{{ns-name}}.handlers        :refer [handler auth-backend]]
             [{{ns-name}}.util            :as    util]
-            [taoensso.timbre :as timbre :refer (log  trace  debug  info  warn  error  fatal  report
-                                                     logf tracef debugf infof warnf errorf fatalf reportf
-                                                     spy get-env log-env)])
+            [taoensso.timbre :as log])
   (:gen-class))
 
 (defn- wrap-log
@@ -27,7 +25,7 @@
   "Wraps the ring handler to support CORS"
   [handler]
   (fn [request]
-;    (util/p "raw request" request)    ; uncomment this line if you want to inspect each request as it comes in.
+;    (log/info request)    ; uncomment this line if you want to inspect each request as it comes in.
     (let [resp (handler request)]
       ; If the response is nil, don't pass through ring-cors
       (if ((complement nil?) resp)
@@ -51,7 +49,6 @@
              #_(wrap-trace :header :ui)))
 
 ;; ---------------------------------  Server
-
 
 (defonce server (atom nil))
 
