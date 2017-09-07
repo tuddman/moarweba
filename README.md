@@ -17,10 +17,14 @@ choose a name for your project. e.g., mycoolapp
 Then it's just a matter of entering the following commands into your terminal:
 
 ```bash
-export PORT=8080
+## Create your project
 
 lein new moarweba mycoolapp
 cd mycoolapp 
+
+## Spin it up
+
+export PORT=8080
 lein repl
 ```
 
