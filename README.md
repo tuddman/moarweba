@@ -42,9 +42,9 @@ browse to [localhost:8080](http://localhost:8080) in your browser, or
 in _production:_
 
 ```
-cd myproject
+cd mycoolapp
 lein uberjar
-java -jar target/myproject-< VERSION >-standalone.jar start 
+java -jar target/mycoolapp-< VERSION >-standalone.jar start 
 ```
 ### What's in the Box
 
