@@ -10,7 +10,7 @@ It is designed to offer you a great starting point for your project.
 
 [leiningen](https://leiningen.org/) and a modern JDK installed.
 
-### Starting Up
+### How Do I Get Started? 
 
 choose a name for your project. e.g., mycoolapp
 
@@ -46,15 +46,6 @@ cd myproject
 lein uberjar
 java -jar target/myproject-< VERSION >-standalone.jar start 
 ```
-
-###  Motivation
-
-I write a bunch of web applications. Plus, I like Clojure. A lot.
-
-What has emerged is this loose collection of libraries and patterns that I've put together to quickly get up and running to get stuff done.  
-
-This is primarily the basic structure I was repeatedly copying over from project to project.
-
 ### What's in the Box
 
 A fully RESTful Web Server, of course!
@@ -78,11 +69,17 @@ Moarweba rigs up the following great Clojure libraries for you:
 |[buddy-auth](https://github.com/funcool/buddy-auth), [buddy-hashers](https://github.com/funcool/buddy-hashers), and [buddy-sign](https://github.com/funcool/buddy-sign)| because Security isn't an afterthought. |
 |[cheshire](https://github.com/dakrone/cheshire)| because JSON |
 
-You can keep none, some, or all of these libraries as you progress in building up your project. Your application will dictate what to keep and what to discard, but these included web libraries are _generally_ useful regardless of the domain.
+### Wait... Is this just another 'Framework'  ?
+
+No.
+
+
+You can keep all, some, or none of these libraries as you progress in building up your project. Your application will dictate what to keep and what to strip out, but these included web libraries are _generally_ useful regardless of the domain you are in.
+
 
 ### What's Going On Inside?
 
-ok, peek into `src/moarweba/`  and you'll see the following files:
+ok, peek into `./src/mycoolapp`  and you'll see the following files:
 
 ##### server.clj
 
@@ -113,9 +110,14 @@ I'm not imposing any opinions about what backend you should use. Some of you lik
 
 Utility stuff.  Yep. 
 
-### Wait... Is this just another 'Framework'  ?
+###  Motivation?
 
-No.
+I write a bunch of web applications. Plus, I like Clojure. A lot.
+
+What has emerged is this loose collection of libraries and patterns that I've put together to quickly get up and running to get stuff done.  
+
+This is primarily the basic structure I was repeatedly copying over from project to project.
+
 
 ## No License
 
