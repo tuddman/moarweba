@@ -16,7 +16,7 @@
 (defn- wrap-log
   [handler log-f]
   (fn [request]
-    (debug (log-f request))
+    (log/debug (log-f request))
     (handler request)))
 
 ;; ---------------------------------  CORS
@@ -126,8 +126,8 @@
       "start"
       (->
        (reset! server (run-server #'app {:port (Integer. (util/env-var "PORT"))}))
-       (info (str "server started. listen on 0.0.0.0:" (util/env-var "PORT"))))
+       (log/info (str "server started. listen on 0.0.0.0:" (util/env-var "PORT"))))
       "stop" (stop-server)
       (exit 1 (usage summary)))))
 
-(reload)  ;; Comment this line BEFORE pushing to production.
+;;(reload)  ;; Comment this line BEFORE pushing to production.

@@ -1,5 +1,7 @@
 (ns {{ns-name}}.util)
 
+(def secret "replace-me-with-an-environment-variable")
+
 (defn env-var
   "fetches a given ENV"
   [^String s]
