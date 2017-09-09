@@ -15,4 +15,6 @@
 ["test/{{sanitized}}/core_test.clj" (render "test/moarweba/core_test.clj" data)]
 ["src/{{sanitized}}/db.clj" (render "src/moarweba/db.clj" data)]
 ["src/{{sanitized}}/core.clj" (render "src/moarweba/core.clj" data)]
+["README.md" (render "README.md")]
+[".gitignore" (render ".gitignore")]
 )))

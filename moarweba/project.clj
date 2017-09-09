@@ -1,6 +1,6 @@
-(defproject moarweba/lein-template "0.0.2"
-  :description "Clojure Web Server; Created with moarweba"
+(defproject moarweba/lein-template "0.0.3"
+  :description "Clojure Web Server; Made with Moarweba"
   :url "https://github.com/tuddman/moarweba"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :license {:name "unlicense"
+            :url "http://unlicense.org"}
   :eval-in-leiningen true)

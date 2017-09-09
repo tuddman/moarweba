@@ -130,4 +130,4 @@
       "stop" (stop-server)
       (exit 1 (usage summary)))))
 
-;;(reload)  ;; Comment this line BEFORE pushing to production.
+(reload)  ;; Comment this line BEFORE pushing to production.

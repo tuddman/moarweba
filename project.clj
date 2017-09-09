@@ -29,4 +29,5 @@
               :uberjar  {:main moarweba.server, :aot :all}
               :production  {:env {:production true}}}
   :uberjar-name "moarweba-0.1.0-standalone.jar"  
-  :repl-options {:timeout 60000}) 
+  :repl-options {:timeout 60000}
+  :template-additions [".gitignore" "README.md"]) 
