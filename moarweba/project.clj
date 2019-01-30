@@ -1,4 +1,4 @@
-(defproject moarweba/lein-template "0.0.3"
+(defproject moarweba/lein-template "0.1.0"
   :description "Clojure Web Server; Made with Moarweba"
   :url "https://github.com/tuddman/moarweba"
   :license {:name "unlicense"

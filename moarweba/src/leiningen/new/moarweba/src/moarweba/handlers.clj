@@ -1,66 +1,70 @@
 (ns {{ns-name}}.handlers
   (:require
-   [bidi.bidi :as bidi :refer [match-route path-for]]
    [bidi.ring :as bidiring :refer (make-handler)]
    [buddy.auth :refer [authenticated? throw-unauthorized]]
    [buddy.auth.backends.token :refer [jws-backend]]
+   [buddy.sign.jwt :as jwt]
    [clj-time.core :as t]
    [liberator.core :refer [defresource]]
-   [{{ns-name}}.db :as db]
-   [{{ns-name}}.util :as util]))
+   [{{ns-name}}.db :as db]))
+
+
+(def secret "replace-me-with-an-environment-variable")
 
 ; Create an instance of auth backend.
 (def auth-backend  (jws-backend
-                    {:secret util/secret
-                     :options {:alg :hs512}}))
+                    {:secret secret
+                     :options {:alg :hs256}}))
 
-(defn- allowed?
-  [context profile]
-  (and
-   (authenticated? (:request context))
-   (some #(= profile %)
-         (flatten [(get-in context [:request :identity :profile])]))))
+(defn make-token
+  [claims dur]
+  (let [c {:exp (t/plus (t/now) (t/days dur))}]
+    (jwt/sign (merge claims c) secret {:alg :hs256})))
 
-(defn- param
-  [context param]
-  (-> context :request :route-params param))
+(defn- param [context param] (-> context :request :route-params param))
 
-(defn- get-body
-  [context]
-  (-> context :request :body))
- 
-(defresource backend
+(defn- get-body [context] (-> context :request :body))
+
+(defresource employees
   :available-media-types ["application/json"]
-  :allowed-methods [:post]
+  :allowed-methods [:get :post]
+  :handle-ok (fn [context]  (db/all-employees))
   :post! (fn [context]
-           (let [data-to-fetch  (db/call-backend (get-body context))]
-             {::response data-to-fetch}))
+           (let [record  (db/new-employee (get-body context))]
+             {::response record}))
   :handle-created ::response)
- 
-(defresource echo
+
+(defresource employee
   :available-media-types ["application/json"]
-  :allowed-methods [:get :post!]
-  :handle-ok (fn [context]  "ping")
-  :post! (fn [context] {::response (get-body context)})
-  :handle-created ::response)
+  :allowed-methods [:get :put :delete]
+  :handle-ok (fn [context] (db/get-employee (param context :id)))
+  :put! (fn [context] {:updated (db/update-employee (param context :id) (dissoc (get-body context) :Status))})
+  :delete! (fn [context] (db/delete-employee (param context :id))))
+
+(defresource deactivation
+  :available-media-types ["application/json"]
+  :allowed-methods [:delete]
+  :authorized? (fn [context] (authenticated? (:request context)))
+  :delete! (fn [context] (db/set-to-inactive (param context :id))))
+
+(defresource token
+  :available-media-types ["application/json"]
+  :allowed-methods [:get]
+  :handle-ok (fn [context] {:token (str "Token " (make-token {} 180))}))
 
 (defresource home
   :available-media-types ["application/json"]
   :allowed-methods [:get]
-  :handle-ok (fn [context] {:Hello "World"}))
+  :handle-ok (fn [context] {:status "running"}))
 
-(defresource status
-  :available-media-types ["application/json"]
-  :allowed-methods [:get]
-  :handle-ok (fn [context] {:status "ok" :version (System/getProperty "{{ns-name}}.version")}))
- 
 ;; ---------------------------------  ROUTES
 
 
 (def handler
   (make-handler
-   ["/" [[""                     home]
-         ["backend"           backend]
-         ["echo"                 echo]
-         ["status"             status]
-         [true (fn [_] {:status 404})]]]))
+   ["/" [[""                      home]
+         ["employees"        employees]
+         [["employees/" :id]  employee]
+         [["employees/deactivate/" :id]  deactivation]
+         ["token"  token]
+[true (fn [_] {:status 404})]]]))
